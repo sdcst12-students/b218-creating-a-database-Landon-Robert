@@ -5,8 +5,8 @@ connection = sqlite3.connect(file)
 print(connection)
 
 cursor = connection.cursor()
-query = ("""
-create table if not exists customers (
+query = """
+create table if not exists customers2 (
     id integer primary key autoincrement,
     fname tinytext,
     lname tinytext,
@@ -15,9 +15,10 @@ create table if not exists customers (
     address tinytext,
     city tinytext, 
     postalcode tinytext);
-""")
+"""
 cursor.execute(query)
-query = """
+
+q2 = """
 create table if not exists pets (
     id integer primary key autoincrement,
     name tinytext,
@@ -26,8 +27,9 @@ create table if not exists pets (
     birthdate tinytext,
     ownerID int);
 """
-cursor.execute(query)
-query = """
+cursor.execute(q2)
+
+q3 = """
 create table if not exists visits (
     id integer primary key autoincrement,
     ownerid int,
@@ -35,23 +37,34 @@ create table if not exists visits (
     details text,
     cost float(16,2),
     paid float(16,2));
-);
 """
-cursor.execute(query)
+cursor.execute(q3)
 
-"""
+q = "select name from sqlite_master where type='table';"
+cursor.execute(q)
+r = cursor.fetchall()
+print(r)
+
 end = False
 print(cursor.fetchall())
 while end == False:
-    option = input("What would you like to do?\nExit: 0\nAdd new customer: 1\nSearch for a customer: 2")
-    if option == 0:
+    option = input("What would you like to do?\nExit: 0\nAdd new customer: 1\nSearch for a customer: 2\n")
+    if option == "0":
         end = True
-    elif option == 1:
+    elif option == "1":
         print("Please enter relevant customer information:")
-        for i in cursor.fetchall():
-
-    elif option == 2:
-        print()
+        Uid = int(input("Uid #: "))
+        fname = input("First Name: ")
+        lname = input("Last Name: ")
+        phone = int(input("Phone Number (no spaces): "))
+        email = input("Email:")
+        address = input("Address: ")
+        city = input("City: ")
+        postalcode = input("Postal Code: ")
+        query = f"insert into customers2 (id,fname,lname,phone,email,address,city,postalcode) values ('{Uid}','{fname}','{lname}','{phone}','{email}','{address}','{city}','{postalcode}');"
+        print(query)
+        cursor.execute(query)
+    elif option == "2":
+        print("2")
     else:
         print("That is not a valid input.")
-"""
