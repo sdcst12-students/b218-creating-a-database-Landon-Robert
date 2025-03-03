@@ -6,8 +6,8 @@ print(connection)
 
 cursor = connection.cursor()
 query = """
-create table if not exists customers2 (
-    id integer primary key autoincrement,
+create table if not exists customers3 (
+    Uid integer primary key autoincrement,
     fname tinytext,
     lname tinytext,
     phone bigint,
@@ -20,7 +20,7 @@ cursor.execute(query)
 
 q2 = """
 create table if not exists pets (
-    id integer primary key autoincrement,
+    Pid integer primary key autoincrement,
     name tinytext,
     type tinytext,
     breed tinytext,
@@ -31,7 +31,7 @@ cursor.execute(q2)
 
 q3 = """
 create table if not exists visits (
-    id integer primary key autoincrement,
+    Vid integer primary key autoincrement,
     ownerid int,
     petid int,
     details text,
@@ -61,10 +61,20 @@ while end == False:
         address = input("Address: ")
         city = input("City: ")
         postalcode = input("Postal Code: ")
-        query = f"insert into customers2 (id,fname,lname,phone,email,address,city,postalcode) values ('{Uid}','{fname}','{lname}','{phone}','{email}','{address}','{city}','{postalcode}');"
+        query = f"insert into customers3 (Uid,fname,lname,phone,email,address,city,postalcode) values ('{Uid}','{fname}','{lname}','{phone}','{email}','{address}','{city}','{postalcode}');"
         print(query)
         cursor.execute(query)
     elif option == "2":
-        print("2")
+        userInfo = ["Uid", "fname", "lname", "phone", "email", "address", "city", "postalcode"]
+        decision = int(input("Search for existing customer by:\nUid #: 1\nFirst Name: 2\nLast Name: 3\nPhone Number: 4\nEmail: 5\nAddress: 6\nCity: 7\nPostal Code: 8\nExit: 0\n"))
+        if decision == 0:
+            end = True
+        elif 1 <= decision <= 8:
+            Uinfo = input("Please enter the corresponding info (ex. if you chose name, enter name): ")
+            cursor.execute(f"select * from customers3 where {userInfo[decision-1]}={Uinfo}")
+            e = cursor.fetchall()
+            print(e)
+        else:
+            print("That is not a valid input.")
     else:
         print("That is not a valid input.")
