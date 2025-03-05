@@ -6,7 +6,7 @@ print(connection)
 
 cursor = connection.cursor()
 query = """
-create table if not exists customers3 (
+create table if not exists customers4 (
     Uid integer primary key autoincrement,
     fname tinytext,
     lname tinytext,
@@ -50,7 +50,6 @@ while end == False:
         end = True
     elif option == "1":
         print("Please enter relevant customer information:")
-        Uid = int(input("Uid #: "))
         fname = input("First Name: ")
         lname = input("Last Name: ")
         phone = int(input("Phone Number (no spaces): "))
@@ -58,17 +57,17 @@ while end == False:
         address = input("Address: ")
         city = input("City: ")
         postalcode = input("Postal Code: ")
-        query = f"insert into customers3 (Uid,fname,lname,phone,email,address,city,postalcode) values ('{Uid}','{fname}','{lname}','{phone}','{email}','{address}','{city}','{postalcode}');"
+        query = f"insert into customers4 (fname,lname,phone,email,address,city,postalcode) values ('{fname}','{lname}','{phone}','{email}','{address}','{city}','{postalcode}');"
         print(query)
         cursor.execute(query)
     elif option == "2":
         userInfo = ["Uid", "fname", "lname", "phone", "email", "address", "city", "postalcode"]
-        decision = input("Search for existing customer by:\nUid #: 1\nFirst Name: 2\nLast Name: 3\nPhone Number: 4\nEmail: 5\nAddress: 6\nCity: 7\nPostal Code: 8\nExit: 0\n")
-        if decision == 0:
+        decision = int(input("Search for existing customer by:Uid: 1\nFirst Name: 2\nLast Name: 3\nPhone Number: 4\nEmail: 5\nAddress: 6\nCity: 7\nPostal Code: 8\nExit: 0\n"))
+        if int(decision) == 0:
             end = True
-        elif 1 <= decision <= 8:
+        elif 1 <= int(decision) <= 8:
             Uinfo = input("Please enter the corresponding info (ex. if you chose name, enter name): ")
-            cursor.execute(f"select * from customers3 where {userInfo[decision-1]}={Uinfo}")
+            cursor.execute(f"select * from customers4 where {userInfo[decision-1]}='{Uinfo}'")
             e = cursor.fetchall()
             print(e)
         else:
