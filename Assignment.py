@@ -40,15 +40,12 @@ create table if not exists visits (
 """
 cursor.execute(q3)
 
-q = "select name from sqlite_master where type='table';"
-cursor.execute(q)
-r = cursor.fetchall()
-print(r)
+
 
 end = False
-print(cursor.fetchall())
+
 while end == False:
-    option = input("What would you like to do?\nExit: 0\nAdd new customer: 1\nSearch for a customer: 2\n")
+    option = input("\nWhat would you like to do?\nExit: 0\nAdd new customer: 1\nSearch for a customer: 2\n")
     if option == "0":
         end = True
     elif option == "1":
@@ -66,7 +63,7 @@ while end == False:
         cursor.execute(query)
     elif option == "2":
         userInfo = ["Uid", "fname", "lname", "phone", "email", "address", "city", "postalcode"]
-        decision = int(input("Search for existing customer by:\nUid #: 1\nFirst Name: 2\nLast Name: 3\nPhone Number: 4\nEmail: 5\nAddress: 6\nCity: 7\nPostal Code: 8\nExit: 0\n"))
+        decision = input("Search for existing customer by:\nUid #: 1\nFirst Name: 2\nLast Name: 3\nPhone Number: 4\nEmail: 5\nAddress: 6\nCity: 7\nPostal Code: 8\nExit: 0\n")
         if decision == 0:
             end = True
         elif 1 <= decision <= 8:
